@@ -22,6 +22,11 @@ while len(guessed_states) < 50:
     usr_input = screen.textinput(title=f"{len(guessed_states)}/50 correct", prompt="Enter State")
 
     if usr_input == "Exit":
+        for state in all_state:
+            if state in guessed_states:
+                all_state.remove(state)
+        states_to_learn = pd.Series(all_state)
+        states_to_learn.to_csv("states_to_learn.csv")
         break
     #if user input in data.csv then print state name at x,y values
     if usr_input.title() in all_state:
@@ -37,12 +42,5 @@ while len(guessed_states) < 50:
         t.write(state_info[0])
         guessed_states.append(state_info[0])
     
-for state in all_state:
-    if state in guessed_states:
-        all_state.remove(state)
-        
-print(all_state)
-        
-states_to_learn = pd.Series(all_state)
-states_to_learn.to_csv("states_to_learn.csv")
+
 screen.exitonclick()
